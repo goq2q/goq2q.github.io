@@ -40,6 +40,8 @@
 
 
 
+  <meta property="article:modified_time" content="2021-10-13T00:00:00-06:00">
+
 
 
   
@@ -275,7 +277,7 @@
     <meta itemprop="headline" content="Using ASCII waveforms to test real-time audio code">
     <meta itemprop="description" content="I draw sound wave ASCII art in Q2Q’s source code. These ASCII art waveforms ensure that the real-time audio engine at the heart of Q2Q stays bug-free.">
     <meta itemprop="datePublished" content="2021-10-12T00:00:00-06:00">
-    
+    <meta itemprop="dateModified" content="2021-10-13T00:00:00-06:00">
 
     <div class="page__inner-wrap">
       
@@ -300,6 +302,17 @@
         
       </span>
     
+
+    
+<p>
+    
+      <span class="page__date" style="margin:0;font-size:0.75em"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Published:</strong> <time datetime="2021-10-12T00:00:00-06:00">October 12, 2021</time></span>
+    
+    
+      <span class="page__date" style="margin:0 0 0 3em;font-size:0.75em"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-10-13">October 13, 2021</time></span>
+    
+</p>
+
   </p>
 
 
@@ -312,9 +325,9 @@
 
 <!-- more -->
 
-<p>Software development best-practices dictate that if you want your software to be high-quality (who doesn’t?), you test your code, you <a href="https://martinfowler.com/bliki/SelfTestingCode.html">test it automatically</a>, and you test it often (as part of a <a href="https://martinfowler.com/articles/continuousIntegration.html">continuous integration</a> build process). In other words, you should make accidentally publishing bugs as difficult as possible. Q2Q, of course, has a test suites to prevent regressions, and a CI system that makes sure all tests pass (just like any other good software project).</p>
+<p>Software development best-practices dictate that if you want your software to be high-quality (who doesn’t?), you test your code, you <a href="https://martinfowler.com/bliki/SelfTestingCode.html">test it automatically</a>, and you test it often (as part of a <a href="https://martinfowler.com/articles/continuousIntegration.html">continuous integration</a> build process). In other words, you should make accidentally publishing bugs as difficult as possible. Q2Q, of course, has test suites to prevent regressions, and a CI system that makes sure all tests pass (just like any other good software project).</p>
 
-<p>Q2Q is a real-time audo application. It does things like starting/stopping sounds, fading/panning sounds, and looping/devamping sounds, and these kinds of features are mission-critical. They cannot fail or have bugs. Here’s the catch: audio programming is extremely tricky to get right. When I was first writing Q2Q, I spent days trying to get anything coherent out of the speakers <em>even at all</em>. It’s very easy to get some buffer index wrong, or do a time conversion incorrectly, or forget to handle more than just mono and stereo signals, or even to just be off by a small number of samples without noticing.</p>
+<p>Q2Q is a <a href="http://www.rossbencina.com/code/real-time-audio-programming-101-time-waits-for-nothing">real-time audo</a> application. It does things like starting/stopping sounds, fading/panning sounds, and looping/devamping sounds, and these kinds of features are mission-critical. They cannot fail or have bugs. Here’s the catch: audio programming is extremely tricky to get right. When I was first writing Q2Q, I spent days trying to get anything coherent out of the speakers <em>even at all</em>. It’s very easy to get some buffer index wrong, or do a time conversion incorrectly, or forget to handle more than just mono and stereo signals, or even to just be off by a small number of samples without noticing.</p>
 
 <p>This is hard to write automated tests for – how are you supposed to write a test that asserts, “a one-second fade-out should work”? My initial thought was to take a sliding average (approximating loudness), and assert that it constantly decreases, for example. But then how would you test looping functionality? Or mixing different sounds together? Or crossfading? Trying to come up with how to test those invariants is very hard.</p>
 
@@ -377,9 +390,6 @@ ASCII waveform baseline test failure.
 
 
         
-
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-10-12T00:00:00-06:00">October 12, 2021</time></p>
-
 
       </footer>
 
