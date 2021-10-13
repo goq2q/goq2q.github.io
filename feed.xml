@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.2.1">Jekyll</generator><link href="https://goq2q.net/feed.xml" rel="self" type="application/atom+xml" /><link href="https://goq2q.net/" rel="alternate" type="text/html" /><updated>2021-10-12T22:24:45-06:00</updated><id>https://goq2q.net/feed.xml</id><title type="html">Q2Q</title><subtitle>Next-gen sound cueing software for live theatre for macOS and Windows</subtitle><author><name>John Wostenberg</name></author><entry><title type="html">Using ASCII Waveforms to test real-time audio code</title><link href="https://goq2q.net/blog/tech/using-ascii-waveforms-to-test-real-time-audio-code" rel="alternate" type="text/html" title="Using ASCII Waveforms to test real-time audio code" /><published>2021-10-12T00:00:00-06:00</published><updated>2021-10-12T00:00:00-06:00</updated><id>https://goq2q.net/blog/tech/using-ascii-waveforms-to-test-real-time-audio-code</id><content type="html" xml:base="https://goq2q.net/blog/tech/using-ascii-waveforms-to-test-real-time-audio-code">&lt;p&gt;I draw sound wave ASCII art in Q2Q’s source code. These ASCII art waveforms ensure that the real-time audio engine at the heart of Q2Q stays bug-free.&lt;/p&gt;
+
+&lt;!-- more --&gt;
+
+&lt;p&gt;Software development best-practices dictate that if you want your software to be high-quality (who doesn’t?), you test your code, you &lt;a href=&quot;https://martinfowler.com/bliki/SelfTestingCode.html&quot;&gt;test it automatically&lt;/a&gt;, and you test it often (as part of a &lt;a href=&quot;https://martinfowler.com/articles/continuousIntegration.html&quot;&gt;continuous integration&lt;/a&gt; build process). In other words, you should make accidentally publishing bugs as difficult as possible. Q2Q, of course, has a test suites to prevent regressions, and a CI system that makes sure all tests pass (just like any other good software project).&lt;/p&gt;
+
+&lt;p&gt;Q2Q is a real-time audo application. It does things like starting/stopping sounds, fading/panning sounds, and looping/devamping sounds, and these kinds of features are mission-critical. They cannot fail or have bugs. Here’s the catch: audio programming is extremely tricky to get right. When I was first writing Q2Q, I spent days trying to get anything coherent out of the speakers &lt;em&gt;even at all&lt;/em&gt;. It’s very easy to get some buffer index wrong, or do a time conversion incorrectly, or forget to handle more than just mono and stereo signals, or even to just be off by a small number of samples without noticing.&lt;/p&gt;
+
+&lt;p&gt;This is hard to write automated tests for – how are you supposed to write a test that asserts, “a one-second fade-out should work”? My initial thought was to take a sliding average (approximating loudness), and assert that it constantly decreases, for example. But then how would you test looping functionality? Or mixing different sounds together? Or crossfading? Trying to come up with how to test those invariants is very hard.&lt;/p&gt;
+
+&lt;p&gt;I stumbled across &lt;a href=&quot;https://blog.janestreet.com/using-ascii-waveforms-to-test-hardware-designs/&quot;&gt;a post from Jane Street’s tech blog&lt;/a&gt; that describes a technique for testing hardware oscillators (which generate waveforms), where they render the oscillator’s output to text, which can be very easilly diffed. Additionally, the F# compiler &lt;a href=&quot;https://github.com/dotnet/fsharp/tree/dbf9a625d3188184ecb787a536ddb85a4ea7a587/tests/fsharp/typecheck/sigs&quot;&gt;has some tests&lt;/a&gt; (which it calls “baseline tests”) that test the new compiler’s output against output from an earlier known-good version of itself. A combination of these two approaches sounded very good to me.&lt;/p&gt;
+
+&lt;p&gt;Q2Q employs this ASCII-waveform baseline testing technique to great success. Every time I work on a new feature, I manually create some test cases for the new feature. For example, if I were writing the component that performs fading and panning, I would first create a test case to exercise a simple fade (perhaps a short fade-out), and output to a simple array, instead of an actual output device (this is pretty easy as I use &lt;a href=&quot;https://github.com/naudio/NAudio&quot;&gt;NAudio&lt;/a&gt; for audio processing). Then, I would attempt to implement the feature. Then, I would use my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ASCIIWaveformRenderer&lt;/code&gt; to turn the output into an array of strings, acting as a visual representation of the data that would have been outputted to the audio device. I would run this in &lt;a href=&quot;https://docs.microsoft.com/en-us/dotnet/fsharp/tools/fsharp-interactive/&quot;&gt;F# interactive&lt;/a&gt;, so that if it looks good, I can copy-paste the result right back into the test code as the baseline to compare against from now on. If it didn’t look right, I would tweak the code until it does. Rinse and repeat for all the corner cases.&lt;/p&gt;
+
+&lt;figure&gt;
+  
+&lt;a href=&quot;/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/simple-fade-in-baseline.png&quot;&gt;&lt;img src=&quot;/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/simple-fade-in-baseline.png&quot; alt=&quot;Foo&quot; /&gt;&lt;/a&gt;
+
+  &lt;figcaption&gt;
+Fade-in baseline test using an ASCII waveform.
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+  
+&lt;a href=&quot;/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/simple-looping-baseline.png&quot;&gt;&lt;img src=&quot;/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/simple-looping-baseline.png&quot; alt=&quot;Foo&quot; /&gt;&lt;/a&gt;
+
+  &lt;figcaption&gt;
+A baseline test for a looping using slices. Notice how the slicer first plays straight through a signal, then loops the last part of the waveform.
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;This provides a great regression testing experience. Recently, while implementing &lt;a href=&quot;https://en.wikipedia.org/wiki/Pan_law&quot;&gt;pan laws&lt;/a&gt;, I noticed that the CI had started failing. I opened up the error log and was greeted with this:&lt;/p&gt;
+
+&lt;figure&gt;
+  
+&lt;a href=&quot;/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/fade-provider-baseline-failure.png&quot;&gt;&lt;img src=&quot;/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/fade-provider-baseline-failure.png&quot; alt=&quot;Foo&quot; /&gt;&lt;/a&gt;
+
+  &lt;figcaption&gt;
+ASCII waveform baseline test failure.
+&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;This is telling us that a test is failing because the system’s output did not match the expected ASCII waveform baseline.&lt;/p&gt;
+
+&lt;p&gt;The tests for &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FadeSampleProvider&lt;/code&gt; (the component that handles fading and panning), were catching a legitimate mistake. As you can see, storing the baseline as an ASCII waveform makes this much easier to debug than if it were to be an opaque array of raw sample data. &lt;a href=&quot;https://github.com/haf/expecto&quot;&gt;Expecto&lt;/a&gt;, the test framework I use, even gives a good enough visual diff there. You can kind of tell what is going wrong just by the picture – it’s supposed to be a fade out, as indicated by the first (green) waveform (so gradually decreasing in overall volume), and it kind of does this at first, but then the signal starts fading back in! Why was this happening? After some digging, it turns out that I had accidentally removed the clamping logic in the interpolation functions, thinking they were do-nothing code. These interpolations are simply mathematical functions&lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot; rel=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;, so you can put in numbers &lt;em&gt;you&lt;/em&gt; would consider invalid, and they will happily start doing funny things – like causing a fade-out to start fading back in. Oops!&lt;/p&gt;
+
+&lt;p&gt;The interesting thing is that if these tests weren’t around, this bug probably would have gone unidentified, causing subtle glitches, for quite a while. Since the audio is streamed in real time, it is not processed all at once; rather, it is processed in buffered chunks. When the audio device is ready for more sound to play, it gives Q2Q an empty buffer, which Q2Q then fills with samples from the processing chain. This happens many time per second (as determined by the size of the buffer). &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FadeSampleProvider&lt;/code&gt; only calls the interpolation function when a fade is actually in progress – but it only re-decides this on the next buffer. Therefore, when a fade ends before the end of the buffer (which it likely would), it would exhibit this problem for the rest of that audio buffer. Buffer sizes are small enough (as measure in seconds) that it likely would have sounded like a millisecond-long click or pop, which would have been extremely difficult to attribute to the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;FadeSampleProvider&lt;/code&gt; in particular. I would have probably chalked it up to slow file reading, or inefficient code causing the device to drop some frames.&lt;/p&gt;
+
+&lt;p&gt;ASCII-waveform baseline tests are great, but what about the cases I don’t know to write tests for? Can we take this even further? Check back for a future blog post – &lt;a href=&quot;/blog&quot;&gt;Property-based fuzz testing&lt;/a&gt; to the rescue!&lt;/p&gt;
+
+&lt;!-- TODO: write something about pan laws then link to it --&gt;
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;&lt;em&gt;I use different kinds of interpolation functions to implement the different fade shapes you can use, such as linear fades, constant-power fades, and compromise fades. &lt;a href=&quot;https://www.wolframalpha.com/input/?i=plot+%28sin%280.5x*pi%29%29%2C+%28x%29%2C+%280.5%28x%2Bsin%280.5x*pi%29%29%29+from+x%3D0+to+1&quot;&gt;Here’s a sample graph&lt;/a&gt; of some of these functions plotted together, and &lt;a href=&quot;https://www.wolframalpha.com/input/?i=plot+%28sin%280.5x*pi%29%29%2C+%28x%29%2C+%280.5%28x%2Bsin%280.5x*pi%29%29%29&quot;&gt;here’s that same graph&lt;/a&gt; without restricting the x axis to a specific range. Observe that the output makes sense as a fade volume for x values from 0 to 1, but start to get weird outside of that range. Hence, we need to clamp the x value between 0 and 1 before we pass it into the interpolation formula.&lt;/em&gt; &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name>John Wostenberg</name></author><category term="tech" /><summary type="html">I draw sound wave ASCII art in Q2Q’s source code. These ASCII art waveforms ensure that the real-time audio engine at the heart of Q2Q stays bug-free.</summary></entry></feed>

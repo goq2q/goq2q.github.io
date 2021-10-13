@@ -1,0 +1,425 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Using ASCII Waveforms to test real-time audio code - Q2Q</title>
+<meta name="description" content="I draw sound wave ASCII art in Q2Q’s source code. These ASCII art waveforms ensure that the real-time audio engine at the heart of Q2Q stays bug-free.">
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Q2Q">
+<meta property="og:title" content="Using ASCII Waveforms to test real-time audio code">
+<meta property="og:url" content="https://goq2q.net/blog/tech/using-ascii-waveforms-to-test-real-time-audio-code">
+
+
+  <meta property="og:description" content="I draw sound wave ASCII art in Q2Q’s source code. These ASCII art waveforms ensure that the real-time audio engine at the heart of Q2Q stays bug-free.">
+
+
+
+  <meta property="og:image" content="https://goq2q.net/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/banner-sound-waves-1280px.jpg">
+
+
+
+
+
+  <meta property="article:published_time" content="2021-10-12T00:00:00-06:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://goq2q.net/blog/tech/using-ascii-waveforms-to-test-real-time-audio-code">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "John Wostenberg",
+      "url": "https://goq2q.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Q2Q Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Q2Q
+          
+        </a>
+        <ul class="visible-links"></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+  
+
+
+
+
+
+
+
+<div class="page__hero"
+  style=" background-image: url('');"
+>
+  
+    <img src="/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/banner-sound-waves-1280px.jpg" alt="Using ASCII Waveforms to test real-time audio code" class="page__hero-image">
+  
+  
+</div>
+
+
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name"></h3>
+    
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Using ASCII Waveforms to test real-time audio code">
+    <meta itemprop="description" content="I draw sound wave ASCII art in Q2Q’s source code. These ASCII art waveforms ensure that the real-time audio engine at the heart of Q2Q stays bug-free.">
+    <meta itemprop="datePublished" content="2021-10-12T00:00:00-06:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Using ASCII Waveforms to test real-time audio code
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>I draw sound wave ASCII art in Q2Q’s source code. These ASCII art waveforms ensure that the real-time audio engine at the heart of Q2Q stays bug-free.</p>
+
+<!-- more -->
+
+<p>Software development best-practices dictate that if you want your software to be high-quality (who doesn’t?), you test your code, you <a href="https://martinfowler.com/bliki/SelfTestingCode.html">test it automatically</a>, and you test it often (as part of a <a href="https://martinfowler.com/articles/continuousIntegration.html">continuous integration</a> build process). In other words, you should make accidentally publishing bugs as difficult as possible. Q2Q, of course, has a test suites to prevent regressions, and a CI system that makes sure all tests pass (just like any other good software project).</p>
+
+<p>Q2Q is a real-time audo application. It does things like starting/stopping sounds, fading/panning sounds, and looping/devamping sounds, and these kinds of features are mission-critical. They cannot fail or have bugs. Here’s the catch: audio programming is extremely tricky to get right. When I was first writing Q2Q, I spent days trying to get anything coherent out of the speakers <em>even at all</em>. It’s very easy to get some buffer index wrong, or do a time conversion incorrectly, or forget to handle more than just mono and stereo signals, or even to just be off by a small number of samples without noticing.</p>
+
+<p>This is hard to write automated tests for – how are you supposed to write a test that asserts, “a one-second fade-out should work”? My initial thought was to take a sliding average (approximating loudness), and assert that it constantly decreases, for example. But then how would you test looping functionality? Or mixing different sounds together? Or crossfading? Trying to come up with how to test those invariants is very hard.</p>
+
+<p>I stumbled across <a href="https://blog.janestreet.com/using-ascii-waveforms-to-test-hardware-designs/">a post from Jane Street’s tech blog</a> that describes a technique for testing hardware oscillators (which generate waveforms), where they render the oscillator’s output to text, which can be very easilly diffed. Additionally, the F# compiler <a href="https://github.com/dotnet/fsharp/tree/dbf9a625d3188184ecb787a536ddb85a4ea7a587/tests/fsharp/typecheck/sigs">has some tests</a> (which it calls “baseline tests”) that test the new compiler’s output against output from an earlier known-good version of itself. A combination of these two approaches sounded very good to me.</p>
+
+<p>Q2Q employs this ASCII-waveform baseline testing technique to great success. Every time I work on a new feature, I manually create some test cases for the new feature. For example, if I were writing the component that performs fading and panning, I would first create a test case to exercise a simple fade (perhaps a short fade-out), and output to a simple array, instead of an actual output device (this is pretty easy as I use <a href="https://github.com/naudio/NAudio">NAudio</a> for audio processing). Then, I would attempt to implement the feature. Then, I would use my <code class="language-plaintext highlighter-rouge">ASCIIWaveformRenderer</code> to turn the output into an array of strings, acting as a visual representation of the data that would have been outputted to the audio device. I would run this in <a href="https://docs.microsoft.com/en-us/dotnet/fsharp/tools/fsharp-interactive/">F# interactive</a>, so that if it looks good, I can copy-paste the result right back into the test code as the baseline to compare against from now on. If it didn’t look right, I would tweak the code until it does. Rinse and repeat for all the corner cases.</p>
+
+<figure>
+  
+<a href="/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/simple-fade-in-baseline.png"><img src="/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/simple-fade-in-baseline.png" alt="Foo" /></a>
+
+  <figcaption>
+Fade-in baseline test using an ASCII waveform.
+</figcaption>
+</figure>
+
+<figure>
+  
+<a href="/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/simple-looping-baseline.png"><img src="/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/simple-looping-baseline.png" alt="Foo" /></a>
+
+  <figcaption>
+A baseline test for a looping using slices. Notice how the slicer first plays straight through a signal, then loops the last part of the waveform.
+</figcaption>
+</figure>
+
+<p>This provides a great regression testing experience. Recently, while implementing <a href="https://en.wikipedia.org/wiki/Pan_law">pan laws</a>, I noticed that the CI had started failing. I opened up the error log and was greeted with this:</p>
+
+<figure>
+  
+<a href="/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/fade-provider-baseline-failure.png"><img src="/assets/images/blog/2021-10-06-using-ascii-waveforms-to-test-real-time-audio-code/fade-provider-baseline-failure.png" alt="Foo" /></a>
+
+  <figcaption>
+ASCII waveform baseline test failure.
+</figcaption>
+</figure>
+
+<p>This is telling us that a test is failing because the system’s output did not match the expected ASCII waveform baseline.</p>
+
+<p>The tests for <code class="language-plaintext highlighter-rouge">FadeSampleProvider</code> (the component that handles fading and panning), were catching a legitimate mistake. As you can see, storing the baseline as an ASCII waveform makes this much easier to debug than if it were to be an opaque array of raw sample data. <a href="https://github.com/haf/expecto">Expecto</a>, the test framework I use, even gives a good enough visual diff there. You can kind of tell what is going wrong just by the picture – it’s supposed to be a fade out, as indicated by the first (green) waveform (so gradually decreasing in overall volume), and it kind of does this at first, but then the signal starts fading back in! Why was this happening? After some digging, it turns out that I had accidentally removed the clamping logic in the interpolation functions, thinking they were do-nothing code. These interpolations are simply mathematical functions<sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>, so you can put in numbers <em>you</em> would consider invalid, and they will happily start doing funny things – like causing a fade-out to start fading back in. Oops!</p>
+
+<p>The interesting thing is that if these tests weren’t around, this bug probably would have gone unidentified, causing subtle glitches, for quite a while. Since the audio is streamed in real time, it is not processed all at once; rather, it is processed in buffered chunks. When the audio device is ready for more sound to play, it gives Q2Q an empty buffer, which Q2Q then fills with samples from the processing chain. This happens many time per second (as determined by the size of the buffer). <code class="language-plaintext highlighter-rouge">FadeSampleProvider</code> only calls the interpolation function when a fade is actually in progress – but it only re-decides this on the next buffer. Therefore, when a fade ends before the end of the buffer (which it likely would), it would exhibit this problem for the rest of that audio buffer. Buffer sizes are small enough (as measure in seconds) that it likely would have sounded like a millisecond-long click or pop, which would have been extremely difficult to attribute to the <code class="language-plaintext highlighter-rouge">FadeSampleProvider</code> in particular. I would have probably chalked it up to slow file reading, or inefficient code causing the device to drop some frames.</p>
+
+<p>ASCII-waveform baseline tests are great, but what about the cases I don’t know to write tests for? Can we take this even further? Check back for a future blog post – <a href="/blog">Property-based fuzz testing</a> to the rescue!</p>
+
+<!-- TODO: write something about pan laws then link to it -->
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><em>I use different kinds of interpolation functions to implement the different fade shapes you can use, such as linear fades, constant-power fades, and compromise fades. <a href="https://www.wolframalpha.com/input/?i=plot+%28sin%280.5x*pi%29%29%2C+%28x%29%2C+%280.5%28x%2Bsin%280.5x*pi%29%29%29+from+x%3D0+to+1">Here’s a sample graph</a> of some of these functions plotted together, and <a href="https://www.wolframalpha.com/input/?i=plot+%28sin%280.5x*pi%29%29%2C+%28x%29%2C+%280.5%28x%2Bsin%280.5x*pi%29%29%29">here’s that same graph</a> without restricting the x axis to a specific range. Observe that the output makes sense as a fade volume for x values from 0 to 1, but start to get weird outside of that range. Hence, we need to clamp the x value between 0 and 1 before we pass it into the interpolation formula.</em> <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time datetime="2021-10-12T00:00:00-06:00">October 12, 2021</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Using+ASCII+Waveforms+to+test+real-time+audio+code%20https%3A%2F%2Fgoq2q.net%2Fblog%2Ftech%2Fusing-ascii-waveforms-to-test-real-time-audio-code" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgoq2q.net%2Fblog%2Ftech%2Fusing-ascii-waveforms-to-test-real-time-audio-code" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fgoq2q.net%2Fblog%2Ftech%2Fusing-ascii-waveforms-to-test-real-time-audio-code" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+            
+      </div>
+    </div>
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 John Wostenberg. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
