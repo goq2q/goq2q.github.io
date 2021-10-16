@@ -9,7 +9,7 @@
   <head>
     <meta charset="utf-8">
 
-<!-- begin _includes/seo.html --><title>Q2Q Blog - Q2Q</title>
+<!-- begin _includes/seo.html --><title>Q2Q Changelog - Q2Q</title>
 <meta name="description" content="Next-gen sound cueing software for live theatre for macOS and Windows">
 
 
@@ -20,8 +20,8 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="Q2Q">
-<meta property="og:title" content="Q2Q Blog">
-<meta property="og:url" content="https://goq2q.net/blog/">
+<meta property="og:title" content="Q2Q Changelog">
+<meta property="og:url" content="https://goq2q.net/changelog">
 
 
   <meta property="og:description" content="Next-gen sound cueing software for live theatre for macOS and Windows">
@@ -41,7 +41,7 @@
   
 
 
-<link rel="canonical" href="https://goq2q.net/blog/">
+<link rel="canonical" href="https://goq2q.net/changelog">
 
 
 
@@ -92,7 +92,7 @@
 
   </head>
 
-  <body class="layout--home wide">
+  <body class="layout--single">
     <nav class="skip-links">
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
@@ -142,74 +142,104 @@
   
 
 
-  <div class="archive">
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Q2Q Changelog">
     
-      <h1 id="page-title" class="page__title">Q2Q Blog</h1>
     
-    
-
-
-<h3 class="archive__subtitle">Recent Posts</h3>
-
-
-
-
-<div class="entries-list">
-  
     
 
-
-
-<div class="list__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
+    <div class="page__inner-wrap">
       
-        <a href="/blog/tech/using-ascii-waveforms-to-test-real-time-audio-code" rel="permalink">Using ASCII waveforms to test real-time audio code
-</a>
-      
-    </h2>
-    
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Q2Q Changelog
+</h1>
+          
 
-  <p class="page__meta">
-    
 
-    
-
-    
-      
+        </header>
       
 
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
+      <section class="page__content" itemprop="text">
         
-          5 minute read
+        <h2 id="040">0.4.0</h2>
+
+<ul>
+  <li>Added pan laws to fade triggers, which allow you to control the algorithm that Q2Q uses to vary the amplitude throughout the fade/pan.</li>
+  <li>Added a button that lets you change the sound file on a start trigger.</li>
+  <li>Added a crossfade trigger, which allows you to bring one sound out and one in with one trigger.</li>
+  <li>Improved visual separation between tracks in the main grid.</li>
+  <li>Added a landing page.</li>
+  <li>Added an about page.</li>
+  <li>Improved audio engine performance.</li>
+  <li>Bug fixes
+    <ul>
+      <li>Fixed track levels being wrong when projects are first loaded.</li>
+      <li>Fixed an audio engine issue related to hot-swapping devices with different sample rates while audio is playing.</li>
+      <li>Made the audio engine fault-tolerant to buggy device drivers instead of getting in a broken state.</li>
+      <li>macOS - Fixed a few instances of audio glitching.</li>
+      <li>UI - Fixed audio clips being broken if you created a new project (without saving) and added audio.</li>
+      <li>UI - Fixed cue and track names displaying incorrectly in some situations.</li>
+      <li>UI - Fixed UI crashing due to audio device channel numbers changing.</li>
+      <li>UI - Fixed various issues that could cause orphaned playing sounds.</li>
+      <li>UI - Fixed trigger insertion being broken.</li>
+      <li>UI - Fixed things sometimes appearing on top of menu items.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="030">0.3.0</h2>
+
+<ul>
+  <li>Added macOS support</li>
+</ul>
+
+<h2 id="020">0.2.0</h2>
+
+<ul>
+  <li>Added an app icon.</li>
+  <li>Added hotkeys for most menu items.</li>
+  <li>Added an infobox that displays information about when you hover over various parts of the application.</li>
+  <li>Made global keys not override textboxes anymore (e.g. spacebar for GO, escape for panic, and arrow keys for cue/track selection).</li>
+  <li>Fixed a bug where dragging start triggers would break them.</li>
+</ul>
+
+<h2 id="010">0.1.0</h2>
+
+<ul>
+  <li>Add audio slicing, looping, and devamping functionality.</li>
+  <li>Add support for multiple triggers in a cue-track slot</li>
+  <li>Add ability to drag-n-drop triggers</li>
+</ul>
+
+<h2 id="001">0.0.1</h2>
+
+<p>Initial version</p>
+
+
         
-      </span>
-    
+      </section>
 
-    
-<p>
-    
-    
-</p>
-
-  </p>
+      <footer class="page__meta">
+        
+        
 
 
-    <p class="archive__item-excerpt" itemprop="description">I draw sound wave ASCII art in Q2Q’s source code. These ASCII art waveforms ensure that the real-time audio engine at the heart of Q2Q stays bug-free.
-</p>
+        
+
+      </footer>
+
+      
+
+      
+    </div>
+
+    
   </article>
-</div>
 
+  
   
 </div>
 
-
-
-
-  </div>
-</div>
     </div>
 
     
