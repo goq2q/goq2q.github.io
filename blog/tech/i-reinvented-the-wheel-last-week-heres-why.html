@@ -1,0 +1,486 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>I reinvented the wheel last week, and here’s why - Q2Q</title>
+<meta name="description" content="Common wisdom tells you that many problems worth solving have already been solved for you (probably more than once), and that you should leverage this fact. In other words: don’t reinvent the wheel; stand on the shoulders of giants. I very often follow this rule of thumb. But last week, I broke that rule and wrote an F# implementation of the OSC (Open Sound Control) protocol1.                 Um, ackshually, it’s a content format, not a protocol… Yes, I know, dear reader, and they spell this out in [the OSC 1.1 spec][osc-1.1]. I called it that for sake of simplicity. Calling it a “content format” may be more correct, but I think “protocol” gives a better connotation in that opening paragraph. You may notice that I more correctly use the “content format” description later on. Whatever, go ahead and crucify me for that if you’re feeling particularly pedantic today. I’ll still love you. You—yes, you, beloved reader. &#8617;">
+
+
+  <meta name="author" content="John Wostenberg">
+  
+  <meta property="article:author" content="John Wostenberg">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Q2Q">
+<meta property="og:title" content="I reinvented the wheel last week, and here’s why">
+<meta property="og:url" content="https://goq2q.net/blog/tech/i-reinvented-the-wheel-last-week-heres-why">
+
+
+  <meta property="og:description" content="Common wisdom tells you that many problems worth solving have already been solved for you (probably more than once), and that you should leverage this fact. In other words: don’t reinvent the wheel; stand on the shoulders of giants. I very often follow this rule of thumb. But last week, I broke that rule and wrote an F# implementation of the OSC (Open Sound Control) protocol1.                 Um, ackshually, it’s a content format, not a protocol… Yes, I know, dear reader, and they spell this out in [the OSC 1.1 spec][osc-1.1]. I called it that for sake of simplicity. Calling it a “content format” may be more correct, but I think “protocol” gives a better connotation in that opening paragraph. You may notice that I more correctly use the “content format” description later on. Whatever, go ahead and crucify me for that if you’re feeling particularly pedantic today. I’ll still love you. You—yes, you, beloved reader. &#8617;">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-10-26T00:00:00-06:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://goq2q.net/blog/tech/i-reinvented-the-wheel-last-week-heres-why">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "John Wostenberg",
+      "url": "https://goq2q.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Q2Q Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Q2Q
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/changelog">Changelog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/blog/">Blog</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/john-wostenberg.jpg" alt="John Wostenberg" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">John Wostenberg</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Creator of Q2Q, F# hacker.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Boulder, CO</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:john@goq2q.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/jwosty" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="I reinvented the wheel last week, and here’s why">
+    <meta itemprop="description" content="Common wisdom tells you that many problems worth solving have already been solved for you (probably more than once), and that you should leverage this fact. In other words: don’t reinvent the wheel; stand on the shoulders of giants. I very often follow this rule of thumb. But last week, I broke that rule and wrote an F# implementation of the OSC (Open Sound Control) protocol1.            Um, ackshually, it’s a content format, not a protocol… Yes, I know, dear reader, and they spell this out in [the OSC 1.1 spec][osc-1.1]. I called it that for sake of simplicity. Calling it a “content format” may be more correct, but I think “protocol” gives a better connotation in that opening paragraph. You may notice that I more correctly use the “content format” description later on. Whatever, go ahead and crucify me for that if you’re feeling particularly pedantic today. I’ll still love you. You—yes, you, beloved reader. &#8617;      ">
+    <meta itemprop="datePublished" content="2021-10-26T00:00:00-06:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">I reinvented the wheel last week, and here’s why
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+
+    
+<p>
+    
+      <span class="page__date" style="margin:0;font-size:0.75em"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Published:</strong> <time datetime="2021-10-26T00:00:00-06:00">October 26, 2021</time></span>
+    
+    
+</p>
+
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Common wisdom tells you that many problems worth solving have already been solved for you (probably more than once), and that you should leverage this fact. In other words: don’t reinvent the wheel; stand on the shoulders of giants. I very often follow this rule of thumb. But last week, I broke that rule and wrote <a href="https://github.com/jwosty/FSharp.Osc">an F# implementation</a> of the <a href="http://opensoundcontrol.org/">OSC (Open Sound Control) protocol</a><sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote" rel="footnote">1</a></sup>.</p>
+
+<p><img src="/assets/images/blog/2021-10-16-i-reinvented-the-wheel-last-week-heres-why/caveman-square-wheels-m.jpg" alt="Caveman pushing cart with square wheels" /></p>
+
+<p>But first, what is OSC? Here’s a quick and incomplete overview (there’s plenty of information elsewhere on the intertubes): OSC is a simple but very flexible message format, used to allow devices or applications to talk to each other in ad-hoc and arbitrary ways. An OSC message consists of an address string, such as <code class="language-plaintext highlighter-rouge">"/oscillators/1/frequency"</code>, and a list of arguments (which can be things like strings, integers, floats, etc). An OSC client sends messages to a server, which will attempt to <em>dispatch</em> the message based on the functionality it decides to expose. OSC also has pattern matching, which allows, for example, <code class="language-plaintext highlighter-rouge">"/oscillators/*/frequency"</code> to simultaneously dispatch to <code class="language-plaintext highlighter-rouge">"/oscillators/1/frequency"</code>, <code class="language-plaintext highlighter-rouge">"oscillators/2/frequency"</code>, <code class="language-plaintext highlighter-rouge">"oscillators/foobar/frequency"</code>, etc. It is quite powerful and flexible, and <a href="http://opensoundcontrol.org/page-list.html#implementations">lots of things speak OSC</a>. The spec defines simple encodings for these messages<sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote" rel="footnote">2</a></sup>. It was originally intended for use in music- and audio-based applications (such as synthesizers) as a potential alternative to MIDI, but has enjoyed wider multimedia applicability in things like lighting, animatronics, and robotics (to name a few).</p>
+
+<p>Q2Q support for OSC (both sending a receiving) is the latest feature I’ve been working on, and it’s been a rabbit hole, but boy, has it been a fun rabbit hole. Since Q2Q is written in <a href="https://fsharp.org/">F#</a>, I was looking for ways to send/receive OSC messages in the language. Though F# has <a href="fsprojects">a strong open-source community</a>, it’s not too surprising that nobody has published a first-class OSC library. There are C# OSC libraries (such as <a href="https://github.com/ValdemarOrn/SharpOSC">SharpOsc</a>), but I didn’t consider them an option because I knew I really wanted all the goodies that well-designed F#-oriented code awards you, such as <a href="https://fsharpforfunandprofit.com/posts/correctness-immutability/#reasons-why-immutability-is-important">immutability</a>, <a href="https://fsharpforfunandprofit.com/posts/designing-with-types-making-illegal-states-unrepresentable/">making illegal states unrepresentable</a>, and <a href="https://fsharpforfunandprofit.com/posts/recipe-part2/">railway-oriented programming (ROP)</a>, <a href="http://learnyouahaskell.com/making-our-own-types-and-typeclasses#algebraic-data-types">algebraic data types</a>—the list goes on. So I decided to reinvent the wheel and build an OSC library in F#. Besides, <a href="https://blog.codinghorror.com/dont-reinvent-the-wheel-unless-you-plan-on-learning-more-about-wheels/">this was a wheel I wanted to learn about</a>.</p>
+
+<p>The specs for <a href="http://opensoundcontrol.org/spec-1_0.html">OSC 1.0</a> and <a href="http://opensoundcontrol.org/files/2009-NIME-OSC-1.1.pdf">OSC 1.1</a> are pretty short as far as specs go; only a couple pages each—you could read them over lunch. This makes it pretty straightforward to just drive out the whole implementation using <a href="https://martinfowler.com/bliki/TestDrivenDevelopment.html">TDD (Test Drive Development)</a>. The entire OSC 1.1 AST (excluding bundles and timetags, which I just didn’t get around to) consists of the following:</p>
+
+<div class="language-fsharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">type</span> <span class="nc">OscAtom</span> <span class="p">=</span>
+    <span class="p">|</span> <span class="nc">OscInt32</span> <span class="k">of</span> <span class="n">intValue</span><span class="p">:</span><span class="n">int32</span>
+    <span class="p">|</span> <span class="nc">OscFloat32</span> <span class="k">of</span> <span class="n">floatValue</span><span class="p">:</span><span class="n">float32</span>
+    <span class="p">|</span> <span class="nc">OscString</span> <span class="k">of</span> <span class="n">stringValue</span><span class="p">:</span><span class="kt">string</span>
+    <span class="p">|</span> <span class="nc">OscBlob</span> <span class="k">of</span> <span class="n">blobData</span><span class="p">:</span><span class="n">byte</span><span class="bp">[]</span>
+    <span class="p">|</span> <span class="nc">OscBool</span> <span class="k">of</span> <span class="kt">bool</span>
+    <span class="p">|</span> <span class="nc">OscNone</span>
+    <span class="p">|</span> <span class="nc">OscImpulse</span>
+<span class="k">type</span> <span class="nc">OscMessage</span> <span class="p">=</span> <span class="p">{</span> <span class="n">addressPattern</span><span class="p">:</span> <span class="kt">string</span><span class="p">;</span> <span class="n">arguments</span><span class="p">:</span> <span class="nc">OscAtom</span> <span class="kt">list</span> <span class="p">}</span>
+</code></pre></div></div>
+
+<p>Boom, <a href="https://fsharpforfunandprofit.com/ddd/">Domain Designed</a>.</p>
+
+<p>Next step: Implementing each of the encoding/decoding functions for the atoms and messages, according to the spec. After that: the message dispatching / matching logic (which F# <a href="https://github.com/jwosty/FSharp.Osc/blob/master/src/FSharp.Osc.fs#L253">is particularly good at</a>). Then, finally: the code that fires these messages over the wire (I wrote both UDP and TCP clients), as well as the code that can listen for OSC messages coming in from the network (UDP only for now). The whole thing is just shy of 600 lines of code. Sure, I could have spent that time doing other Q2Q features. But in this case, the advantages outweigh the time spent: this implementation will fit right in with the rest of Q2Q’s idiomatic F# codebase, and I know for a fact that it is correct to the spec<sup id="fnref:3" role="doc-noteref"><a href="#fn:3" class="footnote" rel="footnote">3</a></sup> since it has <a href="https://github.com/jwosty/FSharp.Osc/blob/master/Tests/Program.fs">complete test coverage</a>. There’s almost 2x the lines of test code than actual code. Sometimes that could be a code smell, but I would argue that it’s not when you’re implementing a protocol from its spec.</p>
+
+<p>Do I always recommend reinventing the wheel? Definitely not. Would I recommend trying it from time to time? Absolutely.</p>
+
+<p>Coming soon to theaters near you: OSC support in Q2Q 0.5.0! In the mean time, for geeks like me, you can <a href="https://github.com/jwosty/FSharp.Osc">browse the source code</a>, or <a href="https://www.nuget.org/packages/FSharp.Osc/">use the NuGet package</a>.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p><em>Um, ackshually, it’s a content format, not a protocol…</em> Yes, I know, dear reader, and they spell this out in <a href="http://opensoundcontrol.org/files/2009-NIME-OSC-1.1.pdf">the OSC 1.1 spec</a>. I called it that for sake of simplicity. Calling it a “content format” may be more correct, but I think “protocol” gives a better connotation in that opening paragraph. You may notice that I more correctly use the “content format” description later on. Whatever, go ahead and crucify me for that if you’re feeling particularly pedantic today. I’ll still love you. You—yes, you, beloved reader. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>There’s also bundles, which I don’t get into this post. You can read more about those elsewhere. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:3" role="doc-endnote">
+      <p>Well, as long as the messages coming in are well-formed. It doesn’t have particularly good handling of error cases for now, but I can always circle back later. The client also doesn’t do a particularly good job of sanitizing the messages before they’re sent (i.e. preventing you from using an address without a slash at the beginning). <a href="#fnref:3" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=I+reinvented+the+wheel+last+week%2C+and+here%27s+why%20https%3A%2F%2Fgoq2q.net%2Fblog%2Ftech%2Fi-reinvented-the-wheel-last-week-heres-why" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgoq2q.net%2Fblog%2Ftech%2Fi-reinvented-the-wheel-last-week-heres-why" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fgoq2q.net%2Fblog%2Ftech%2Fi-reinvented-the-wheel-last-week-heres-why" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/tech/using-ascii-waveforms-to-test-real-time-audio-code" class="pagination--pager" title="Using ASCII waveforms to test real-time audio code
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/tech/using-ascii-waveforms-to-test-real-time-audio-code" rel="permalink">Using ASCII waveforms to test real-time audio code
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+
+    
+<p>
+    
+      <span class="page__date" style="margin:0;font-size:0.75em"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Published:</strong> <time datetime="2021-10-26T00:00:00-06:00">October 26, 2021</time></span>
+    
+    
+</p>
+
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">I draw sound wave ASCII art in Q2Q’s source code. These ASCII art waveforms ensure that the real-time audio engine at the heart of Q2Q stays bug-free.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2021 John Wostenberg. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

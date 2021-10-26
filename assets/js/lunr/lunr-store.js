@@ -4,4 +4,10 @@ var store = [{
         "tags": [],
         "url": "/blog/tech/using-ascii-waveforms-to-test-real-time-audio-code",
         "teaser": null
+      },{
+        "title": "I reinvented the wheel last week, and here's why",
+        "excerpt":"Common wisdom tells you that many problems worth solving have already been solved for you (probably more than once), and that you should leverage this fact. In other words: don’t reinvent the wheel; stand on the shoulders of giants. I very often follow this rule of thumb. But last week,...","categories": ["tech"],
+        "tags": [],
+        "url": "/blog/tech/i-reinvented-the-wheel-last-week-heres-why",
+        "teaser": null
       }]
