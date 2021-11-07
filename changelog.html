@@ -161,7 +161,61 @@
 
       <section class="page__content" itemprop="text">
         
-        <h2 id="040">0.4.0</h2>
+        <h1 id="050">0.5.0</h1>
+
+<ul>
+  <li>Added <a href="http://opensoundcontrol.org/">OSC (Open Sound Control)</a> triggers
+    <ul>
+      <li>An OSC trigger sends an OSC message over TCP or UDP to an OSC server</li>
+      <li>An OSC trigger can have an address and a list of arguments, and support most of the supported OSC argument types (strings, ints, floats, booleans, etc)</li>
+    </ul>
+  </li>
+  <li>Added OSC API
+    <ul>
+      <li>You can now send OSC messages to Q2Q to control it externally from an OSC client</li>
+      <li>Messages that Q2Q will respond to:
+        <ul>
+          <li>Methods
+            <ul>
+              <li><code class="language-plaintext highlighter-rouge">/cue/index/{index}/...</code> - Accesses the methods of a cue by index (starting from 0)</li>
+              <li><code class="language-plaintext highlighter-rouge">/cue/{name}/...</code> - Accesses the methods of a cue by name</li>
+              <li><code class="language-plaintext highlighter-rouge">/cue/armed/...</code> - Accesses the methods of the currently armed cue</li>
+              <li><code class="language-plaintext highlighter-rouge">/cue/armed_prev/...</code> - Accesses the methods of the cue right before the currently armed one, if applicable</li>
+              <li><code class="language-plaintext highlighter-rouge">/cue/armed_next/...</code> - Accesses the methods of the cue right after the currently armed one, if applicable</li>
+              <li><code class="language-plaintext highlighter-rouge">/panic []</code> - Stops all cues</li>
+            </ul>
+          </li>
+          <li>Cue methods
+            <ul>
+              <li><code class="language-plaintext highlighter-rouge">.../go []</code> - Triggers the cue</li>
+              <li><code class="language-plaintext highlighter-rouge">.../arm []</code> - Arms the cue</li>
+            </ul>
+          </li>
+          <li>For example, sending the message <code class="language-plaintext highlighter-rouge">/cue/AB/go</code> (with no arguments) will GO on any cue named “AB”, as if you had pressed the GO button</li>
+          <li>Wildcard patterns are supported, so <code class="language-plaintext highlighter-rouge">/cue/index/{0,1,2}/go</code> will GO on the first, second, and third cues simultaneously</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Added network patch window
+    <ul>
+      <li>Allows configuration of the sending and receiving OSC connection
+        <ul>
+          <li>Can specify the host, port, and protocol (TCP or UDP)</li>
+        </ul>
+      </li>
+      <li>Found under File&gt;Network Patch…</li>
+    </ul>
+  </li>
+  <li>Adjusted the color scheme to be a little bit darker</li>
+  <li>Bug fixes
+    <ul>
+      <li>Fixed bugs relating to levels not being set correctly when changing the output device</li>
+    </ul>
+  </li>
+</ul>
+
+<h1 id="040">0.4.0</h1>
 
 <ul>
   <li>Added pan laws to fade triggers, which allow you to control the algorithm that Q2Q uses to vary the amplitude throughout the fade/pan.</li>
@@ -187,13 +241,13 @@
   </li>
 </ul>
 
-<h2 id="030">0.3.0</h2>
+<h1 id="030">0.3.0</h1>
 
 <ul>
   <li>Added macOS support</li>
 </ul>
 
-<h2 id="020">0.2.0</h2>
+<h1 id="020">0.2.0</h1>
 
 <ul>
   <li>Added an app icon.</li>
@@ -203,7 +257,7 @@
   <li>Fixed a bug where dragging start triggers would break them.</li>
 </ul>
 
-<h2 id="010">0.1.0</h2>
+<h1 id="010">0.1.0</h1>
 
 <ul>
   <li>Add audio slicing, looping, and devamping functionality.</li>
@@ -211,10 +265,9 @@
   <li>Add ability to drag-n-drop triggers</li>
 </ul>
 
-<h2 id="001">0.0.1</h2>
+<h1 id="001">0.0.1</h1>
 
 <p>Initial version</p>
-
 
         
       </section>
