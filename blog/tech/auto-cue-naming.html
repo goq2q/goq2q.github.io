@@ -1,0 +1,538 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Automatic cue naming - Q2Q</title>
+<meta name="description" content="Starting with version 0.6.0, Q2Q will automatically name cues for you now! This was a very fun feature to implement, and there’s a lot of customization you can leverage.">
+
+
+  <meta name="author" content="John Wostenberg">
+  
+  <meta property="article:author" content="John Wostenberg">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Q2Q">
+<meta property="og:title" content="Automatic cue naming">
+<meta property="og:url" content="https://goq2q.net/blog/tech/auto-cue-naming">
+
+
+  <meta property="og:description" content="Starting with version 0.6.0, Q2Q will automatically name cues for you now! This was a very fun feature to implement, and there’s a lot of customization you can leverage.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2022-04-30T00:00:00-06:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="https://goq2q.net/blog/tech/auto-cue-naming">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "John Wostenberg",
+      "url": "https://goq2q.net/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Q2Q Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single wide">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Q2Q
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/changelog">Changelog</a>
+            </li><li class="masthead__menu-item">
+              <a href="/assets/user-guide-current-redirect">User guide PDF</a>
+            </li><li class="masthead__menu-item">
+              <a href="/blog/">Blog</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/assets/images/john-wostenberg.jpg" alt="John Wostenberg" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">John Wostenberg</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p>Creator of Q2Q, F# hacker.</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Boulder, CO</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:john@goq2q.net" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/jwosty" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Automatic cue naming">
+    <meta itemprop="description" content="Starting with version 0.6.0, Q2Q will automatically name cues for you now! This was a very fun feature to implement, and there’s a lot of customization you can leverage.">
+    <meta itemprop="datePublished" content="2022-04-30T00:00:00-06:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Automatic cue naming
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+
+    
+<p>
+    
+      <span class="page__date" style="margin:0;font-size:0.75em"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Published:</strong> <time datetime="2022-04-30T00:00:00-06:00">April 30, 2022</time></span>
+    
+    
+</p>
+
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>Starting with version 0.6.0, Q2Q will automatically name cues for you now! This was a very fun feature to implement, and there’s a lot of customization you can leverage.</p>
+
+<p>By default, new projects will have their cues named with a single alphabetical letter, starting at the beginning–<code class="language-plaintext highlighter-rouge">A</code>. Adding and deleting cues will follow this rule. This is because these new cues are actually all named <code class="language-plaintext highlighter-rouge">$</code> - which Q2Q substitutes with a letter, one greater than the previous. So when you add a new cue, it doesn’t change the other cues’ names; it just affects how Q2Q interprets the names. You can see this for yourself by opening your <code class="language-plaintext highlighter-rouge">.q2q</code> file in a text editor and seeing that all the cues really are named <code class="language-plaintext highlighter-rouge">$</code>!</p>
+
+<p>But some people don’t want letters; they want numbers. Got you covered there, too–use <code class="language-plaintext highlighter-rouge">#</code> for your cue names (you can set a project-default cue name in the top toolbar), and it will auto-increment starting from 0.</p>
+
+<p>There’s a lot more to this cue-naming grammar however; this is where it starts to get interesting. You can add multiples of a substitution symbol to get Q2Q to count with more digits: for example <code class="language-plaintext highlighter-rouge">$$$</code>, <code class="language-plaintext highlighter-rouge">$$$</code>, <code class="language-plaintext highlighter-rouge">$$$</code> becomes <code class="language-plaintext highlighter-rouge">AAA</code>, <code class="language-plaintext highlighter-rouge">BBB</code>, <code class="language-plaintext highlighter-rouge">CCC</code>; and <code class="language-plaintext highlighter-rouge">###</code>, <code class="language-plaintext highlighter-rouge">###</code>, <code class="language-plaintext highlighter-rouge">###</code> becomes <code class="language-plaintext highlighter-rouge">000</code>, <code class="language-plaintext highlighter-rouge">001</code>, <code class="language-plaintext highlighter-rouge">002</code>. Q2Q can increment more than one at a time if you add a number to the end of the substitution, like so: <code class="language-plaintext highlighter-rouge">###5</code>, <code class="language-plaintext highlighter-rouge">###5</code>, <code class="language-plaintext highlighter-rouge">###5</code> becomes <code class="language-plaintext highlighter-rouge">000</code>, <code class="language-plaintext highlighter-rouge">005</code>, <code class="language-plaintext highlighter-rouge">010</code> (works similarly with letters). There’s still more stuff you can do–for the full spec, take a look at the <em>Automatic Cue Naming</em> chapter in <a href="/assets/user-guide-current-redirect">the user guide</a>.</p>
+
+<h2 id="my-preferred-naming-strategy">My preferred naming strategy</h2>
+
+<p>When designing a show, I prefer sounds to be named with letters, and lights with numbers, so there’s less ambiguity, letting the stage manager call out “Ready 30BD… GO!” (meaning “light cue 30 and sound cue BD”). If you use numbers for both, the SM has to specify which are which (unless you’re doing a Chicago-style one-operator-to-rule-them-all show, in which case, you have no need of this distinction).</p>
+
+<p>I also like my cues spaced out, so I have the flexibility to add stuff in between last-minute without causing a rename of half the show and pissing off the SM.</p>
+
+<p>So I would usually go with the <code class="language-plaintext highlighter-rouge">$$5</code> naming scheme (or perhaps <code class="language-plaintext highlighter-rouge">$$$5</code> if I really need the deep organization, like for shows with many cues per scene). I usually use the first letter correspond to the scene, and the second letter is incrementing inside the scene. Say we have <em>Scene 1</em>, <em>Scene 2</em>, <em>Scene 3</em>, each with 3 sound cues inside them. I would name my cues like so:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">$$5</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">AA</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">$$5</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">AF</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">$$5</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">AK</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">{BA}</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">BA</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">$$5</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">BF</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">$$5</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">BK</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">{CA}</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">CA</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">$$5</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">AF</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">$$5</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">AK</code></em></li>
+</ul>
+
+<p>During the desining phase, it’s very easy to just insert cues here and there. But, after the cues have been taken down by the SM, and therefore shouldn’t change names anymore, we can start “locking down” things as we insert new cues. For example, say we need to add two cues between AF and AK without affecting the existing names. We can just give each intermediate cue its desired name <em>without curly braces</em>, and Q2Q will ignore it when counting:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">$$5</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">AA</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">$$5</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">AF</code></em></li>
+  <li><strong><code class="language-plaintext highlighter-rouge">AH</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">AH</code></em></strong></li>
+  <li><strong><code class="language-plaintext highlighter-rouge">AJ</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">AJ</code></em></strong></li>
+  <li><code class="language-plaintext highlighter-rouge">$$5</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">AK</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">{BA}</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">BA</code></em></li>
+  <li><code class="language-plaintext highlighter-rouge">$$5</code> <em>-&gt; <code class="language-plaintext highlighter-rouge">BF</code></em></li>
+  <li><em>…etc</em></li>
+</ul>
+
+<p>This feature also pairs well with the cuesheet CSV export, which uses cue names as displayed by Q2Q, as expected!</p>
+
+<p>I’m excited to see what people do with this feature. What naming scheme will YOU choose?</p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+        
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Automatic+cue+naming%20https%3A%2F%2Fgoq2q.net%2Fblog%2Ftech%2Fauto-cue-naming" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fgoq2q.net%2Fblog%2Ftech%2Fauto-cue-naming" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fgoq2q.net%2Fblog%2Ftech%2Fauto-cue-naming" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/blog/tech/i-reinvented-the-wheel-last-week-heres-why" class="pagination--pager" title="I reinvented the wheel last week, and here’s why
+">Previous</a>
+    
+    
+      <a href="#" class="pagination--pager disabled">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">You May Also Enjoy</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/tech/i-reinvented-the-wheel-last-week-heres-why" rel="permalink">I reinvented the wheel last week, and here’s why
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+
+    
+<p>
+    
+      <span class="page__date" style="margin:0;font-size:0.75em"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Published:</strong> <time datetime="2022-04-30T00:00:00-06:00">April 30, 2022</time></span>
+    
+    
+</p>
+
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Common wisdom tells you that many problems worth solving have already been solved for you (probably more than once), and that you should leverage this fact. ...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/blog/tech/using-ascii-waveforms-to-test-real-time-audio-code" rel="permalink">Using ASCII waveforms to test real-time audio code
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+
+    
+<p>
+    
+      <span class="page__date" style="margin:0;font-size:0.75em"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Published:</strong> <time datetime="2022-04-30T00:00:00-06:00">April 30, 2022</time></span>
+    
+    
+</p>
+
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">I draw sound wave ASCII art in Q2Q’s source code. These ASCII art waveforms ensure that the real-time audio engine at the heart of Q2Q stays bug-free.
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2022 John Wostenberg. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

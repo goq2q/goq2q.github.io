@@ -10,4 +10,10 @@ var store = [{
         "tags": [],
         "url": "/blog/tech/i-reinvented-the-wheel-last-week-heres-why",
         "teaser": null
+      },{
+        "title": "Automatic cue naming",
+        "excerpt":"Starting with version 0.6.0, Q2Q will automatically name cues for you now! This was a very fun feature to implement, and there’s a lot of customization you can leverage. By default, new projects will have their cues named with a single alphabetical letter, starting at the beginning–A. Adding and deleting...","categories": ["tech"],
+        "tags": [],
+        "url": "/blog/tech/auto-cue-naming",
+        "teaser": null
       }]
